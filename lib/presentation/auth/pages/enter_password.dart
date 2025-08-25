@@ -1,5 +1,7 @@
+import 'package:ecommerceapp/common/helper/navigator/app_navigator.dart';
+import 'package:ecommerceapp/common/widgets/appbar/basic_app_bar.dart';
 import 'package:ecommerceapp/common/widgets/button/basic_app_button.dart';
-import 'package:ecommerceapp/presentation/auth/pages/signup.dart';
+import 'package:ecommerceapp/presentation/auth/pages/forgot_password.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -9,8 +11,9 @@ class EnterPasswordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const BasicAppBar(),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 80),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -50,7 +53,7 @@ class EnterPasswordPage extends StatelessWidget {
         children: [
           TextSpan(text: 'Forgot password? '),
           TextSpan(text: 'Reset', recognizer:TapGestureRecognizer()..onTap =(){
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const SignupPage()));
+            AppNavigator.push(context, const ForgotPasswordPage());
           } , style: TextStyle(fontWeight: FontWeight.bold)),
         ],
       ),

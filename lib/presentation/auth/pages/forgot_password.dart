@@ -2,47 +2,44 @@ import 'package:ecommerceapp/common/helper/navigator/app_navigator.dart';
 import 'package:ecommerceapp/common/widgets/appbar/basic_app_bar.dart';
 import 'package:ecommerceapp/common/widgets/button/basic_app_button.dart';
 import 'package:ecommerceapp/presentation/auth/pages/enter_password.dart';
-import 'package:ecommerceapp/presentation/auth/pages/signup.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class SigninPage extends StatelessWidget {
-  const SigninPage({super.key});
+class ForgotPasswordPage extends StatelessWidget {
+  const ForgotPasswordPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: BasicAppBar(hideBack: true,),
+      appBar: BasicAppBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _signinText(),
+            _forgotPasswordText(),
             const SizedBox(height: 20),
             _emailField(),
             const SizedBox(height: 20),
             _continueButton(context),
-            const SizedBox(height: 20),
-            _createAccountText(context),
           ],
         ),
       ),
     );
   }
 
-  Widget _signinText() {
+  Widget _forgotPasswordText() {
     return const Text(
-      'Sign in',
+      'Forgot Password',
       style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
     );
   }
 
   Widget _emailField() {
     return const TextField(
-      decoration: InputDecoration(hintText: 'Email'),
+      decoration: InputDecoration(hintText: 'Enter Email'),
     );
   }
+
 
   Widget _continueButton(BuildContext context) {
     return BasicAppButton(
@@ -50,18 +47,5 @@ class SigninPage extends StatelessWidget {
           AppNavigator.push(context, const EnterPasswordPage());
         },
         title: 'Continue');
-  }
-
-  Widget _createAccountText(BuildContext context) {
-    return RichText(
-      text: TextSpan(
-        children: [
-          TextSpan(text: 'Don\'t you have an account? '),
-          TextSpan(text: 'Create one!', recognizer:TapGestureRecognizer()..onTap =(){
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const SignupPage()));
-          } , style: TextStyle(fontWeight: FontWeight.bold)),
-        ],
-      ),
-    );
   }
 }
