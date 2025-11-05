@@ -6,13 +6,17 @@ import 'package:ecommerceapp/presentation/auth/pages/signup.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+import '../../../data/auth/models/user_signin_req.dart';
+
 class SigninPage extends StatelessWidget {
-  const SigninPage({super.key});
+  SigninPage({super.key});
+
+  final TextEditingController _emailCon = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: BasicAppBar(hideBack: true,),
+      appBar: BasicAppBar(hideBack: true),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
         child: Column(
@@ -39,17 +43,24 @@ class SigninPage extends StatelessWidget {
   }
 
   Widget _emailField() {
-    return const TextField(
+    return TextField(
+      controller: _emailCon,
       decoration: InputDecoration(hintText: 'Email'),
     );
   }
 
   Widget _continueButton(BuildContext context) {
     return BasicAppButton(
-        onPressed:(){
-          AppNavigator.push(context, const EnterPasswordPage());
-        },
-        title: 'Continue');
+      onPressed: () {
+        AppNavigator.push(
+          context,
+          EnterPasswordPage(
+            signinReq: UserSigninReq(email: _emailCon.text),
+          ),
+        );
+      },
+      title: 'Continue',
+    );
   }
 
   Widget _createAccountText(BuildContext context) {
@@ -57,9 +68,17 @@ class SigninPage extends StatelessWidget {
       text: TextSpan(
         children: [
           TextSpan(text: 'Don\'t you have an account? '),
-          TextSpan(text: 'Create one!', recognizer:TapGestureRecognizer()..onTap =(){
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const SignupPage()));
-          } , style: TextStyle(fontWeight: FontWeight.bold)),
+          TextSpan(
+            text: 'Create one!',
+            recognizer: TapGestureRecognizer()
+              ..onTap = () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignupPage()),
+                );
+              },
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
         ],
       ),
     );

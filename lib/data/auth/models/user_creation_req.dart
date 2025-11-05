@@ -11,7 +11,5 @@ class UserCreationReq {
     required this.lastName,
     required this.email,
     required this.password,
-    required this.gender,
-    required this.age,
   });
 }

@@ -1,7 +1,5 @@
-import 'package:ecommerceapp/common/helper/navigator/app_navigator.dart';
 import 'package:ecommerceapp/common/widgets/appbar/basic_app_bar.dart';
-import 'package:ecommerceapp/common/widgets/button/basic_app_button.dart';
-import 'package:ecommerceapp/presentation/auth/pages/enter_password.dart';
+import 'package:ecommerceapp/common/widgets/button/basic_reactive_button.dart';
 import 'package:flutter/material.dart';
 
 class ForgotPasswordPage extends StatelessWidget {
@@ -42,10 +40,11 @@ class ForgotPasswordPage extends StatelessWidget {
 
 
   Widget _continueButton(BuildContext context) {
-    return BasicAppButton(
-        onPressed:(){
-          AppNavigator.push(context, const EnterPasswordPage());
-        },
-        title: 'Continue');
+    return Builder(builder: (context){
+      return BasicReactiveButton(
+          onPressed: (){},
+          title: 'Continue'
+      );
+    });
   }
 }
