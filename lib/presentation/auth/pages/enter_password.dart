@@ -96,7 +96,7 @@ class EnterPasswordPage extends StatelessWidget {
             text: 'Reset',
             recognizer: TapGestureRecognizer()
               ..onTap = () {
-                AppNavigator.push(context, const ForgotPasswordPage());
+                AppNavigator.push(context, ForgotPasswordPage());
               },
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
