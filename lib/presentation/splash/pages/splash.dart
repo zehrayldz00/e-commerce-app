@@ -1,11 +1,13 @@
 import 'package:ecommerceapp/core/configs/assets/app_vectors.dart';
 import 'package:ecommerceapp/presentation/auth/pages/signin.dart';
+import 'package:ecommerceapp/presentation/home/pages/home.dart';
 import 'package:ecommerceapp/presentation/splash/bloc/splash_cubit.dart';
 import 'package:ecommerceapp/presentation/splash/bloc/splash_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../common/helper/navigator/app_navigator.dart';
 import '../../../core/configs/theme/app_colors.dart';
 
 class SplashPage extends StatelessWidget {
@@ -16,10 +18,10 @@ class SplashPage extends StatelessWidget {
     return BlocListener<SplashCubit, SplashState>(
       listener: (context, state) {
         if (state is UnAuthenticated) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => SigninPage()),
-          );
+          AppNavigator.pushReplacement(context, SigninPage());
+        }
+        if (state is Authenticated) {
+          AppNavigator.pushReplacement(context, const HomePage());
         }
       },
       child: Scaffold(
