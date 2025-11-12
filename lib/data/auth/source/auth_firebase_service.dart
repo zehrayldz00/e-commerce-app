@@ -11,6 +11,7 @@ abstract class AuthFirebaseService {
   Future<Either> getAges();
   Future<Either> sendPasswordResetEmail(String email);
   Future<bool> isLoggedIn();
+  Future<Either> getUser();
 }
 
 class AuthFirebaseServiceImpl extends AuthFirebaseService {
@@ -47,22 +48,22 @@ class AuthFirebaseServiceImpl extends AuthFirebaseService {
 
   @override
   Future<Either> getAges() async {
-    try{
-      var returnedData = await FirebaseFirestore.instance.collection('Ages').get();
+    try {
+      var returnedData = await FirebaseFirestore.instance
+          .collection('Ages')
+          .get();
       return Right(returnedData.docs);
-    }catch(e){
+    } catch (e) {
       return const Left('Please try again');
     }
-
   }
 
   @override
-  Future<Either> signin(UserSigninReq user) async{
+  Future<Either> signin(UserSigninReq user) async {
     try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-          email: user.email!,
-          password: user.password!
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: user.email!,
+        password: user.password!,
       );
 
       return const Right('Sign in was successfull');
@@ -78,21 +79,35 @@ class AuthFirebaseServiceImpl extends AuthFirebaseService {
   }
 
   @override
-  Future<Either> sendPasswordResetEmail(String email) async{
-    try{
+  Future<Either> sendPasswordResetEmail(String email) async {
+    try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
       return const Right('Password reset email is sent.');
-    } catch(e){
+    } catch (e) {
       return const Left('Please try again');
     }
   }
 
   @override
-  Future<bool> isLoggedIn() async{
-    if(FirebaseAuth.instance.currentUser != null){
+  Future<bool> isLoggedIn() async {
+    if (FirebaseAuth.instance.currentUser != null) {
       return true;
-    }else{
+    } else {
       return false;
+    }
+  }
+
+  @override
+  Future<Either> getUser() async {
+    try {
+      var currentUser = FirebaseAuth.instance.currentUser;
+      var userData = await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(currentUser!.uid)
+          .get().then((value) => value.data());
+      return Right(userData);
+    } catch (e) {
+      return const Left('Something went wrong');
     }
   }
 }
