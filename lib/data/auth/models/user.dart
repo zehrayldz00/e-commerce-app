@@ -20,7 +20,7 @@ class UserModel {
   });
 
   Map<String, dynamic> toMap() {
-    return {
+    return <String, dynamic>{
       'userId': userId,
       'firstName': firstName,
       'lastName': lastName,
@@ -32,11 +32,11 @@ class UserModel {
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-      userId: map['userId'] as String,
+      userId: map['userId']as String,
       firstName: map['firstName'] as String,
       lastName: map['lastName'] as String,
       email: map['email'] as String,
-      image: map['image'] as String,
+      image: map['image'] ?? '',
       gender: map['gender'] as int,
     );
   }

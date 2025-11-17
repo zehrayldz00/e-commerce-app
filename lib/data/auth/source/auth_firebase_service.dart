@@ -32,6 +32,8 @@ class AuthFirebaseServiceImpl extends AuthFirebaseService {
             'email': user.email,
             'gender': user.gender,
             'age': user.age,
+            "image": returnedData.user!.photoURL,
+            "userId": returnedData.user!.uid,
           });
 
       return const Right('Sign up was successfull');
@@ -103,8 +105,9 @@ class AuthFirebaseServiceImpl extends AuthFirebaseService {
       var currentUser = FirebaseAuth.instance.currentUser;
       var userData = await FirebaseFirestore.instance
           .collection('Users')
-          .doc(currentUser!.uid)
-          .get().then((value) => value.data());
+          .doc(currentUser?.uid)
+          .get()
+          .then((value) => value.data());
       return Right(userData);
     } catch (e) {
       return const Left('Something went wrong');

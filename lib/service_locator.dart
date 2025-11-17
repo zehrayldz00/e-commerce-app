@@ -8,16 +8,22 @@ import 'package:ecommerceapp/domain/auth/usecase/send_password_reset_email.dart'
 import 'package:ecommerceapp/domain/auth/usecase/signup.dart';
 import 'package:get_it/get_it.dart';
 
+import 'data/category/repository/category.dart';
+import 'data/category/source/category_firebase_service.dart';
 import 'domain/auth/usecase/signin.dart';
+import 'domain/category/repository/category.dart';
+import 'domain/category/usecases/get_categories.dart';
 
 final sl = GetIt.instance;
 
 Future<void> initializeDependencies() async {
   // Services
   sl.registerSingleton<AuthFirebaseService>(AuthFirebaseServiceImpl());
+  sl.registerSingleton<CategoryFirebaseService>(CategoryFirebaseServiceImpl());
 
   // Repositories
   sl.registerSingleton<AuthRepository>(AuthRepositoryImpl());
+  sl.registerSingleton<CategoryRepository>(CategoryRepositoryImpl());
 
   // UseCases
   sl.registerSingleton<SignupUseCase>(SignupUseCase());
@@ -28,4 +34,5 @@ Future<void> initializeDependencies() async {
   );
   sl.registerSingleton<IsLoggedInUseCase>(IsLoggedInUseCase());
   sl.registerSingleton<GetUserUseCase>(GetUserUseCase());
+  sl.registerSingleton<GetCategoriesUseCase>(GetCategoriesUseCase());
 }
