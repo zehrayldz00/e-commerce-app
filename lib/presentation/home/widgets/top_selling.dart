@@ -1,19 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../common/widgets/product/product_card.dart';
+import '../../../domain/product/entity/product.dart';
+import '../bloc/top_selling_display_cubit.dart';
+import '../bloc/top_selling_display_state.dart';
 
 class TopSelling extends StatelessWidget {
   const TopSelling({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        _topSelling(),
-        const SizedBox(height: 10),
-        //_products(state.products)
-      ],
+    return BlocProvider(
+      create: (context) => TopSellingDisplayCubit()..displayProducts(),
+      child: BlocBuilder<TopSellingDisplayCubit, TopSellingDisplayState>(
+        builder: (context, state) {
+          if (state is ProductsLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (state is ProductsLoaded) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                _topSelling(),
+                const SizedBox(height: 10),
+                _products(state.products)
+              ],
+            );
+          }
+          return Container();
+        },
+      ),
     );
   }
 
@@ -27,7 +45,7 @@ class TopSelling extends StatelessWidget {
     );
   }
 
-  /*Widget _products(List<ProductEntity> products) {
+  Widget _products(List<ProductEntity> products) {
     return SizedBox(
       height: 300,
       child: ListView.separated(
@@ -41,5 +59,5 @@ class TopSelling extends StatelessWidget {
         itemCount: products.length,
       ),
     );
-  }*/
+  }
 }

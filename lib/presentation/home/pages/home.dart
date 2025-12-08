@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../widgets/categories.dart';
 import '../widgets/search_field.dart';
+import '../widgets/top_selling.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -19,6 +20,8 @@ class HomePage extends StatelessWidget {
             SearchField(),
             SizedBox(height: 24,),
             Categories(),
+            SizedBox(height: 24,),
+            TopSelling(),
           ],
         ),
       )
